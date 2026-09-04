@@ -29,3 +29,17 @@ float HUD::smoothedFps() const {
 	if (avgDt <= 0.0f) return 0.0f;
 	return 1.0f / avgDt;
 }
+void HUD::render(SDL_Renderer* renderer) const
+{
+	float fps = smoothedFps();
+	if (fps > 120.0f) fps = 120.0f;
+	float fillFrac = fps / 120.0f;
+
+	SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+	SDL_FRect frame{ 10.0f, 10.0f, 200.0f, 14.0f };
+	SDL_RenderRect(renderer, &frame);
+
+	SDL_SetRenderDrawColor(renderer, 80, 200, 100, 255);
+	SDL_FRect fill{ 12.0f, 12.0f, 196.0f * fillFrac, 10.0f };
+	SDL_RenderFillRect(renderer, &fill);
+}
