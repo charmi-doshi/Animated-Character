@@ -1,16 +1,18 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include "IUpdatable.h"
+#include "IDrawable.h"
 
-class HUD {
+class HUD :public IUpdatable, public IDrawable {
 public:
 	explicit HUD(int sampleCount = 60);
-	~HUD();
+	~HUD() override;
 
 	HUD(const HUD&) = delete;
 	HUD& operator = (const HUD&) = delete;
 
-	void update(float dt);
-	void render(SDL_Renderer* renderer) const;
+	void update(float dt) override;
+	void render(SDL_Renderer* renderer) const override;
 	float smoothedFps() const;
 	
 private:
